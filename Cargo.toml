@@ -1,0 +1,24 @@
+[package]
+name = "murmur3"
+version = "0.1.0"
+edition = "2018"
+authors = ["Janosch Gräf <janosch.graef@gmail.com>"]
+description = "Implementation of the Murmur3 hash"
+license = "MIT"
+#documentation = "https://docs.rs/murmur3"
+homepage = "https://github.com/jgraef/murmur3"
+repository = "https://github.com/jgraef/murmur3"
+readme = "REAMDE.md"
+categories = ["algorithms"]
+keywords = ["hash", "murmur"]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[dependencies]
+arrayvec = "0.7"
+
+
+[dev-dependencies]
+# For testing
+murmur3 = "0.5"
