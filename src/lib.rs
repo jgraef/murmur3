@@ -25,3 +25,12 @@ pub mod hasher;
 pub mod io;
 pub mod seed;
 pub mod state;
+
+/// Compatibility to `murmur3` crate from crates.io
+#[cfg(feature = "compat")]
+mod compat;
+
+pub use hasher::{Murmur3x64x128, hash};
+
+#[cfg(feature = "compat")]
+pub use compat::murmur3_x86_128;

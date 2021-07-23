@@ -21,3 +21,7 @@ arrayvec = "0.7"
 [dev-dependencies]
 # For testing
 murmur3 = "0.5"
+
+[features]
+# Enables compatibility to `murmur3` crate from crates.io
+compat = []
