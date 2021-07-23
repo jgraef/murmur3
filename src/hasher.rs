@@ -9,8 +9,8 @@ use crate::{
     },
 };
 
-/// Trait for hashers. A hasher accepts data via it's [`Hasher::update`] method, and returns a hash
-/// with [`Hasher::finish`].
+/// Trait for hashers. A hasher accepts data via it's [`Hasher::update`] method,
+/// and returns a hash with [`Hasher::finish`].
 pub trait Hasher {
     type Output;
 
@@ -30,8 +30,9 @@ pub fn hash<H: Hasher + Seedable<T>, T>(seed: T, data: &[u8]) -> H::Output {
     hasher.finish()
 }
 
-/// Hasher implementation based on a `[crate::state::State`]. This uses [`crate::chunked::Chunked`]
-/// to buffer data until a block is full and can be passed into the hash state.
+/// Hasher implementation based on a `[crate::state::State`]. This uses
+/// [`crate::chunked::Chunked`] to buffer data until a block is full and can be
+/// passed into the hash state.
 ///
 /// # TODO
 ///

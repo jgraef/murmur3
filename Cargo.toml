@@ -18,7 +18,6 @@ all-features = true
 [dependencies]
 arrayvec = "0.7"
 
-
 [dev-dependencies]
 # For testing
 murmur3 = "0.5"

@@ -1,4 +1,5 @@
-//! Wrappers for [`std::io::Read`] and [`std::io::Write`] that also compute a hash.
+//! Wrappers for [`std::io::Read`] and [`std::io::Write`] that also compute a
+//! hash.
 
 use std::io::{
     Error,
