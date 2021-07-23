@@ -81,8 +81,6 @@ impl State<16> for State64x128 {
     }
 
     fn push_tail(&mut self, data: &[u8]) {
-        // FIXME: Test `it_hashes_a_tail` fails.
-
         // tail
         // https://github.com/aappleby/smhasher/blob/61a0530f28277f2e850bfc39600ce61d02b518de/src/MurmurHash3.cpp#L286-L314
 

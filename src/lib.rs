@@ -33,4 +33,4 @@ mod compat;
 pub use hasher::{Murmur3x64x128, hash};
 
 #[cfg(feature = "compat")]
-pub use compat::murmur3_x86_128;
+pub use compat::murmur3_x64_128;

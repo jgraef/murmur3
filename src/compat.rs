@@ -5,7 +5,7 @@ use std::io::{Read, Result};
         seed::Seedable,
     };
 
-    pub fn murmur3_x86_128<T: Read>(source: &mut T, seed: u32) -> Result<u128> {
+    pub fn murmur3_x64_128<T: Read>(source: &mut T, seed: u32) -> Result<u128> {
         let mut buf = [0; 1024];
         
         let mut hasher = Murmur3x64x128::from_seed(seed);
@@ -29,7 +29,7 @@ mod tests {
         let data = b"meeeeeeooooowwww";
 
         let expected_hash = murmur3::murmur3_x64_128(&mut Cursor::new(data), 69).unwrap();
-        let got_hash = super::murmur3_x86_128(&mut Cursor::new(data), 69).unwrap();
+        let got_hash = super::murmur3_x64_128(&mut Cursor::new(data), 69).unwrap();
 
         assert_eq!(expected_hash, got_hash);
     }
