@@ -1,3 +1,5 @@
+//! High-level interface for hashers.
+
 use crate::{
     chunked::Chunked,
     seed::Seedable,
@@ -7,6 +9,8 @@ use crate::{
     },
 };
 
+/// Trait for hashers. A hasher accepts data via it's [`Hasher::update`] method, and returns a hash
+/// with [`Hasher::finish`].
 pub trait Hasher {
     type Output;
 
@@ -17,15 +21,17 @@ pub trait Hasher {
     fn finish(self) -> Self::Output;
 }
 
-/// Short-hand for constructing the hasher with `seed`, calling [`Self::update`]
-/// with the data and then [`Self::finish`].
+/// Short-hand for constructing the hasher with
+/// [`crate::seed::Seedable::from_seed`], calling [`Hasher::update`]
+/// with the data and then [`Hasher::finish`].
 pub fn hash<H: Hasher + Seedable<T>, T>(seed: T, data: &[u8]) -> H::Output {
     let mut hasher = H::from_seed(seed);
     hasher.update(data);
     hasher.finish()
 }
 
-/// Higher-level implementation of a hasher. Generic over the hashing state.
+/// Hasher implementation based on a `[crate::state::State`]. This uses [`crate::chunked::Chunked`]
+/// to buffer data until a block is full and can be passed into the hash state.
 ///
 /// # TODO
 ///

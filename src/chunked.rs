@@ -1,3 +1,5 @@
+//! Buffer that splits up incoming data into fixed-size chunks.
+
 use std::slice::ArrayChunks;
 
 use arrayvec::ArrayVec;
@@ -5,7 +7,7 @@ use arrayvec::ArrayVec;
 /// Takes in arbitrarily-sized slices and returns iterators over fixed size
 /// chunks of the input.
 ///
-/// Note: This buffers incomplete chunks. Thus `T: Clone` is necessary to copy
+/// Note: This buffers incomplete chunks. Thus `T: Clone` is required to copy
 /// from the input slice to the internal buffer.
 #[derive(Debug, Default)]
 pub struct Chunked<T, const N: usize> {

@@ -1,3 +1,5 @@
+//! Wrappers for [`std::io::Read`] and [`std::io::Write`] that also compute a hash.
+
 use std::io::{
     Error,
     Read,
@@ -6,6 +8,7 @@ use std::io::{
 
 use crate::hasher::Hasher;
 
+/// A [`std::io::Read`] wrapper, that also hashes any data that is read.
 #[derive(Debug)]
 pub struct ReadHasher<R, H> {
     reader: R,
@@ -17,15 +20,14 @@ impl<R, H> ReadHasher<R, H> {
         Self { reader, hasher }
     }
 
-    pub fn into_parts(self) -> (R, H) {
-        (self.reader, self.hasher)
+    pub fn into_hasher(self) -> H {
+        self.hasher
     }
 }
 
 impl<R, H: Hasher> ReadHasher<R, H> {
-    pub fn finish(self) -> (R, <H as Hasher>::Output) {
-        let hash = self.hasher.finish();
-        (self.reader, hash)
+    pub fn hash(self) -> <H as Hasher>::Output {
+        self.hasher.finish()
     }
 }
 
@@ -39,6 +41,7 @@ impl<R: Read, H: Hasher> Read for ReadHasher<R, H> {
     }
 }
 
+/// A [`std::io::Write`] wrapper, that also hashes any data that is written.
 #[derive(Debug)]
 pub struct WriteHasher<W, H> {
     writer: W,
@@ -50,15 +53,14 @@ impl<W, H> WriteHasher<W, H> {
         Self { writer, hasher }
     }
 
-    pub fn into_parts(self) -> (W, H) {
-        (self.writer, self.hasher)
+    pub fn into_hasher(self) -> H {
+        self.hasher
     }
 }
 
 impl<W, H: Hasher> WriteHasher<W, H> {
-    pub fn finish(self) -> (W, <H as Hasher>::Output) {
-        let hash = self.hasher.finish();
-        (self.writer, hash)
+    pub fn hash(self) -> <H as Hasher>::Output {
+        self.hasher.finish()
     }
 }
 
