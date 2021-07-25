@@ -79,7 +79,6 @@ impl<'a, T, const N: usize> Iterator for ChunkIter<'a, T, N> {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::Chunked;
@@ -91,7 +90,10 @@ mod tests {
         assert!(chunked.next(&[1]).next().is_none());
         assert!(chunked.next(&[2, 3]).next().is_none());
         assert!(chunked.next(&[4, 5, 6]).next().is_none());
-        assert_eq!(chunked.next(&[7, 8, 9]).collect::<Vec<_>>(), vec![&[1, 2, 3, 4, 5, 6, 7, 8]]);
+        assert_eq!(
+            chunked.next(&[7, 8, 9]).collect::<Vec<_>>(),
+            vec![&[1, 2, 3, 4, 5, 6, 7, 8]]
+        );
         assert_eq!(chunked.remainder(), &[9]);
     }
 }

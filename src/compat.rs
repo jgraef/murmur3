@@ -1,24 +1,29 @@
-use std::io::{Read, Result};
+use std::io::{
+    Read,
+    Result,
+};
 
-    use crate::{
-        hasher::{Murmur3x64x128, Hasher},
-        seed::Seedable,
-    };
+use crate::{
+    hasher::{
+        Hasher,
+        Murmur3x64x128,
+    },
+    seed::Seedable,
+};
 
-    pub fn murmur3_x64_128<T: Read>(source: &mut T, seed: u32) -> Result<u128> {
-        let mut buf = [0; 1024];
-        
-        let mut hasher = Murmur3x64x128::from_seed(seed);
+pub fn murmur3_x64_128<T: Read>(source: &mut T, seed: u32) -> Result<u128> {
+    let mut buf = [0; 1024];
 
-        loop {
-            let n = source.read(&mut buf)?;
-            if n == 0 {
-                break Ok(hasher.finish());
-            }
-            hasher.update(&buf[0 .. n]);
+    let mut hasher = Murmur3x64x128::from_seed(seed);
+
+    loop {
+        let n = source.read(&mut buf)?;
+        if n == 0 {
+            break Ok(hasher.finish());
         }
+        hasher.update(&buf[0..n]);
     }
-
+}
 
 #[cfg(test)]
 mod tests {
