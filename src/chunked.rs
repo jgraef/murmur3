@@ -28,12 +28,14 @@ impl<T: Clone, const N: usize> Chunked<T, N> {
             let n = self.buf.remaining_capacity().min(data.len());
             self.buf.extend(data[..n].iter().cloned());
             data = &data[n..];
-            self.first = Some(
-                self.buf
-                    .take()
-                    .into_inner()
-                    .unwrap_or_else(|_| unreachable!()),
-            );
+            if self.buf.is_full() {
+                self.first = Some(
+                    self.buf
+                        .take()
+                        .into_inner()
+                        .unwrap_or_else(|_| unreachable!()),
+                );
+            }
         }
 
         // Iterator for full chunks without any buffer involved.
@@ -74,5 +76,22 @@ impl<'a, T, const N: usize> Iterator for ChunkIter<'a, T, N> {
             }
             _ => self.chunks.next(),
         }
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::Chunked;
+
+    #[test]
+    fn it_fills_buffer_over_multiple_calls() {
+        let mut chunked = Chunked::<u8, 8>::default();
+
+        assert!(chunked.next(&[1]).next().is_none());
+        assert!(chunked.next(&[2, 3]).next().is_none());
+        assert!(chunked.next(&[4, 5, 6]).next().is_none());
+        assert_eq!(chunked.next(&[7, 8, 9]).collect::<Vec<_>>(), vec![&[1, 2, 3, 4, 5, 6, 7, 8]]);
+        assert_eq!(chunked.remainder(), &[9]);
     }
 }
