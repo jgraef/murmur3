@@ -8,10 +8,8 @@
 This crate provides an implementation of the [Murmur3] non-cryptographic
 hash function.
 
-## **WORK IN PROGRESS**
-
-This crate is work-in-progress. Currently only the `x64_128` variant of
-Murmur3 is implemented. There is a more mature version of murmur3 available [here](https://github.com/stusmall/murmur3).
+Currently only the `x64_128` variant of Murmur3 is implemented. There is a
+more mature version of murmur3 available [here](https://github.com/stusmall/murmur3).
 
 ## Why a new crate?
 
